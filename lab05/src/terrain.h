@@ -12,6 +12,7 @@
 class Terrain {
 public:
     Terrain();
+    ~Terrain();
 
     void init();
     void draw();
@@ -20,8 +21,14 @@ private:
     float randValue(int row, int col);
     glm::vec3 getPosition(int row, int col);
     glm::vec3 getNormal(int row, int col);
+    glm::vec2 getUV(int row, int col);
+
+
     std::unique_ptr<OpenGLShape> m_shape;
     const float m_numRows, m_numCols;
+
+    GLuint m_textureProgramID;
+    GLuint m_textureID;
 };
 
 #endif // TERRAIN_H

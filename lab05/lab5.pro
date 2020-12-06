@@ -24,6 +24,7 @@ INCLUDEPATH += src cs123_lib glm ../glew-1.10.0/include
 DEPENDPATH += src cs123_lib glm ../glew-1.10.0/include
 
 SOURCES += \
+    src/beziercurve.cpp \
     src/mainwindow.cpp \
     src/main.cpp \
     src/glwidget.cpp \
@@ -39,6 +40,7 @@ SOURCES += \
     ../glew-1.10.0/src/glew.c
 
 HEADERS += \
+    src/beziercurve.h \
     src/mainwindow.h \
     src/glwidget.h \
     src/openglshape.h \
@@ -60,4 +62,9 @@ OTHER_FILES += \
     shaders/shader.vert
 
 RESOURCES += \
+    images/images.qrc \
     shaders/shaders.qrc
+
+DISTFILES += \
+    shaders/texture.frag \
+    shaders/texture.vert

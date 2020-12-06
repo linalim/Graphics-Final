@@ -2,10 +2,19 @@
 
 #include <math.h>
 #include "gl/shaders/ShaderAttribLocations.h"
+#include <QImage>
 #include <iostream>
+#include <resourceloader.h>
 
-Terrain::Terrain() : m_numRows(100), m_numCols(m_numRows)
+Terrain::Terrain() : m_numRows(100), m_numCols(m_numRows),
+    m_textureProgramID(0),
+    m_textureID(0)
 {
+}
+
+Terrain::~Terrain()
+{
+    glDeleteTextures(1, &m_textureID);
 }
 
 
@@ -79,6 +88,10 @@ glm::vec3 Terrain::getNormal(int row, int col) {
 
 }
 
+glm::vec2 Terrain::getUV(int row, int col) {
+    return glm::vec2(float(row)/float(m_numRows), float(col)/float(m_numCols));
+}
+
 
 /**
  * Initializes the terrain by storing positions and normals in a vertex buffer.
@@ -87,30 +100,84 @@ void Terrain::init() {
     // TODO: Change from GL_LINE to GL_FILL in order to render full triangles instead of wireframe.
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+//    m_textureProgramID = ResourceLoader::createShaderProgram(":/shaders/texture.vert", ":/shaders/texture.frag");
 
     // Initializes a grid of vertices using triangle strips.
     int numVertices = (m_numRows - 1) * (2 * m_numCols + 2);
-    std::vector<glm::vec3> data(2 * numVertices);
+    std::vector<float> data(numVertices * 8);
     int index = 0;
     for (int row = 0; row < m_numRows - 1; row++) {
         for (int col = m_numCols - 1; col >= 0; col--) {
-            data[index++] = getPosition(row, col);
-            data[index++] = getNormal  (row, col);
-            data[index++] = getPosition(row + 1, col);
-            data[index++] = getNormal  (row + 1, col);
+            glm::vec3 currentPos = getPosition(row, col);
+            glm::vec3 currentNormal = getNormal(row, col);
+            glm::vec2 currentUV = getUV(row, col);
+            data[index++] = currentPos[0];
+            data[index++] = currentPos[1];
+            data[index++] = currentPos[2];
+            data[index++] = currentNormal[0];
+            data[index++] = currentNormal[1];
+            data[index++] = currentNormal[2];
+            data[index++] = currentUV[0];
+            data[index++] = currentUV[1];
+
+            glm::vec3 nextPos = getPosition(row+1, col);
+            glm::vec3 nextNormal = getNormal(row+1, col);
+            glm::vec2 nextUV = getUV(row+1, col);
+            data[index++] = nextPos[0];
+            data[index++] = nextPos[1];
+            data[index++] = nextPos[2];
+            data[index++] = nextNormal[0];
+            data[index++] = nextNormal[1];
+            data[index++] = nextNormal[2];
+            data[index++] = nextUV[0];
+            data[index++] = nextUV[1];
+
         }
-        data[index++] = getPosition(row + 1, 0);
-        data[index++] = getNormal  (row + 1, 0);
-        data[index++] = getPosition(row + 1, m_numCols - 1);
-        data[index++] = getNormal  (row + 1, m_numCols - 1);
+
+        glm::vec3 nextPos = getPosition(row+1, 0);
+        glm::vec3 nextNormal = getNormal(row+1, 0);
+        glm::vec2 nextUV = getUV(row+1, 0);
+        data[index++] = nextPos[0];
+        data[index++] = nextPos[1];
+        data[index++] = nextPos[2];
+        data[index++] = nextNormal[0];
+        data[index++] = nextNormal[1];
+        data[index++] = nextNormal[2];
+        data[index++] = nextUV[0];
+        data[index++] = nextUV[1];
+
+        nextPos = getPosition(row+1, m_numCols - 1);
+        nextNormal = getNormal(row+1, m_numCols - 1);
+        nextUV = getUV(row+1, m_numCols - 1);
+        data[index++] = nextPos[0];
+        data[index++] = nextPos[1];
+        data[index++] = nextPos[2];
+        data[index++] = nextNormal[0];
+        data[index++] = nextNormal[1];
+        data[index++] = nextNormal[2];
+        data[index++] = nextUV[0];
+        data[index++] = nextUV[1];
+
     }
 
     // Initialize OpenGLShape.
     m_shape = std::make_unique<OpenGLShape>();
-    m_shape->setVertexData(&data[0][0], data.size() * 3, VBO::GEOMETRY_LAYOUT::LAYOUT_TRIANGLE_STRIP, numVertices);
+    m_shape->setVertexData(&data[0], data.size(), VBO::GEOMETRY_LAYOUT::LAYOUT_TRIANGLE_STRIP, numVertices);
     m_shape->setAttribute(ShaderAttrib::POSITION, 3, 0, VBOAttribMarker::DATA_TYPE::FLOAT, false);
-    m_shape->setAttribute(ShaderAttrib::NORMAL, 3, sizeof(glm::vec3), VBOAttribMarker::DATA_TYPE::FLOAT, false);
+    m_shape->setAttribute(ShaderAttrib::NORMAL, 3, 3 * sizeof(float), VBOAttribMarker::DATA_TYPE::FLOAT, false);
+
+    // added
+//    m_shape->setAttribute(ShaderAttrib::COLOR, 3, 12, VBOAttribMarker::DATA_TYPE::FLOAT, false);
+    m_shape->setAttribute(ShaderAttrib::TEXCOORD0, 2, 6 * sizeof(float), VBOAttribMarker::DATA_TYPE::FLOAT, false);
+
     m_shape->buildVAO();
+
+    QImage image(":/images/grass.jpg");
+    glGenTextures(1, &m_textureID);
+    glBindTexture(GL_TEXTURE_2D, m_textureID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
 }
 
 
@@ -119,5 +186,9 @@ void Terrain::init() {
  */
 void Terrain::draw()
 {
+    // texture
+//    glUseProgram(m_textureProgramID);
+    glBindTexture(m_textureID, GL_TEXTURE_2D);
     m_shape->draw();
+//    glUseProgram(0);
 }

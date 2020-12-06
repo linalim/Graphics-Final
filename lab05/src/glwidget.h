@@ -9,6 +9,7 @@
 #include <GL/glu.h>
 #endif
 #include "terrain.h"
+#include "beziercurve.h"
 
 #define GLM_FORCE_RADIANS
 #include "glm/glm.hpp"            // glm::vec*, mat*, and basic glm functions
@@ -44,6 +45,8 @@ private:
     /** For mouse interaction. */
     float m_angleX, m_angleY, m_zoom;
     QPoint m_prevMousePos;
+
+    BezierCurve m_bezier;
 };
 
 #endif // GLWIDGET_H

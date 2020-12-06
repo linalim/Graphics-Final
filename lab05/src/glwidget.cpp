@@ -9,11 +9,13 @@
 #define PI 3.14159265f
 
 GLWidget::GLWidget(QGLFormat format, QWidget *parent)
-    : QGLWidget(format, parent), m_angleX(0), m_angleY(0.5f), m_zoom(10.f)
+    : QGLWidget(format, parent), m_angleX(0), m_angleY(0.5f), m_zoom(10.f),
+      m_program(0)
 {}
 
 GLWidget::~GLWidget()
-{}
+{
+}
 
 void GLWidget::initializeGL() {
     ResourceLoader::initializeGlew();
@@ -25,8 +27,11 @@ void GLWidget::initializeGL() {
     // Set the color to set the screen when the color buffer is cleared.
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-    m_program = ResourceLoader::createShaderProgram(":/shaders/shader.vert", ":/shaders/shader.frag");
+//    m_program = ResourceLoader::createShaderProgram(":/shaders/shader.vert", ":/shaders/shader.frag");
+    m_program = ResourceLoader::createShaderProgram(":/shaders/texture.vert", ":/shaders/texture.frag");
+
     m_terrain.init();
+    m_bezier.init();
 
     rebuildMatrices();
 }
@@ -41,12 +46,15 @@ void GLWidget::paintGL() {
     glUniformMatrix4fv(glGetUniformLocation(m_program, "model"), 1, GL_FALSE, glm::value_ptr(m_model));
     glUniformMatrix4fv(glGetUniformLocation(m_program, "view"), 1, GL_FALSE, glm::value_ptr(m_view));
     glUniformMatrix4fv(glGetUniformLocation(m_program, "projection"), 1, GL_FALSE, glm::value_ptr(m_projection));
+    //set another uniform called T and update matrix
 
     // Draw terrain.
-    m_terrain.draw();
+//    m_terrain.draw();
+    m_bezier.draw();
 
     // Unbind shader program.
     glUseProgram(0);
+
 }
 
 void GLWidget::resizeGL(int w, int h) {
@@ -75,6 +83,7 @@ void GLWidget::rebuildMatrices() {
     m_view = glm::translate(glm::vec3(0, 0, -m_zoom)) *
              glm::rotate(m_angleY, glm::vec3(1,0,0)) *
              glm::rotate(m_angleX, glm::vec3(0,1,0));
+    // pass in a t variable that will dynamically change the position of view matrix
     m_projection = glm::perspective(0.8f, (float)width()/height(), 0.1f, 100.f);
     update();
 }
