@@ -48,7 +48,7 @@ void GLWidget::initializeGL() {
     glEnable(GL_CULL_FACE);
 
     // Set the color to set the screen when the color buffer is cleared.
-    glClearColor(0.2f, 0.3f, 0.7f, 0.f);
+    glClearColor(0.f, 0.f, 0.f, 0.f);
 
 //    m_program = ResourceLoader::createShaderProgram(":/shaders/shader.vert", ":/shaders/shader.frag");
     m_program = ResourceLoader::createShaderProgram(":/shaders/texture.vert", ":/shaders/texture.frag");

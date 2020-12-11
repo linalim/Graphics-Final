@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/images">
         <file>grass.jpg</file>
+        <file>moon_dust.jpg</file>
+        <file>galaxy.jpg</file>
     </qresource>
 </RCC>

@@ -32,6 +32,7 @@ private:
     int m_param1;
     int m_param2;
 
+
 protected:
     /** builds the VAO, pretty much the same as from lab 1 */
     void buildVAO();

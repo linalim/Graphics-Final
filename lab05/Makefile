@@ -753,7 +753,9 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_images.cpp qrc_shaders.cpp
 qrc_images.cpp: images/images.qrc \
 		../../../../Qt5.14.2/5.14.2/clang_64/bin/rcc \
-		images/grass.jpg
+		images/moon_dust.jpg \
+		images/grass.jpg \
+		images/galaxy.jpg
 	/Users/linalim/Qt5.14.2/5.14.2/clang_64/bin/rcc -name images images/images.qrc -o qrc_images.cpp
 
 qrc_shaders.cpp: shaders/shaders.qrc \
@@ -1530,7 +1532,9 @@ sphere.o: src/sphere.cpp src/sphere.h \
 		src/gl/datatype/VAO.h \
 		src/gl/datatype/VBO.h \
 		src/gl/datatype/VBOAttribMarker.h \
-		src/gl/shaders/ShaderAttribLocations.h
+		src/gl/shaders/ShaderAttribLocations.h \
+		../../../../Qt5.14.2/5.14.2/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../../Qt5.14.2/5.14.2/clang_64/lib/QtGui.framework/Headers/qimage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sphere.o src/sphere.cpp
 
 terrain.o: src/terrain.cpp src/terrain.h \

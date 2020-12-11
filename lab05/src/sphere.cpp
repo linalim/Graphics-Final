@@ -8,6 +8,8 @@
 #include "gl/datatype/VBOAttribMarker.h"
 #include "gl/shaders/ShaderAttribLocations.h"
 #include <iostream>
+#include <QImage>
+
 
 using namespace CS123::GL;
 
@@ -97,6 +99,7 @@ void sphere::buildVAO() {
     markers.push_back(VBOAttribMarker(ShaderAttrib::NORMAL, 3, 3*sizeof(float)));
     VBO vbo = VBO(m_vertexData.data(), m_vertexData.size(), markers);
     m_VAO = std::make_unique<VAO>(vbo, numVertices);
+
 }
 
 glm::vec3 sphere::calculateNormal(float theta, float phi) {
