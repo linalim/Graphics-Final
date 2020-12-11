@@ -19,4 +19,6 @@ void main() {
     WS_normal = (model * vec4(OS_normal, 0.0)).xyz;
 
     gl_Position = projection * view * vec4(WS_position, 1.0);
+    // create a separate variable for viewT using the T variable passed in
+    // gl_position = projection * viewT *....
 }

@@ -59,6 +59,7 @@ SOURCES       = src/beziercurve.cpp \
 		src/openglshape.cpp \
 		cs123_lib/resourceloader.cpp \
 		cs123_lib/errorchecker.cpp \
+		src/sphere.cpp \
 		src/terrain.cpp \
 		src/gl/datatype/VBO.cpp \
 		src/gl/datatype/VBOAttribMarker.cpp \
@@ -76,6 +77,7 @@ OBJECTS       = beziercurve.o \
 		openglshape.o \
 		resourceloader.o \
 		errorchecker.o \
+		sphere.o \
 		terrain.o \
 		VBO.o \
 		VBOAttribMarker.o \
@@ -272,6 +274,7 @@ DIST          = shaders/texture.frag \
 		src/openglshape.h \
 		cs123_lib/resourceloader.h \
 		cs123_lib/errorchecker.h \
+		src/sphere.h \
 		src/terrain.h \
 		src/gl/datatype/VBO.h \
 		src/gl/datatype/VBOAttribMarker.h \
@@ -286,6 +289,7 @@ DIST          = shaders/texture.frag \
 		src/openglshape.cpp \
 		cs123_lib/resourceloader.cpp \
 		cs123_lib/errorchecker.cpp \
+		src/sphere.cpp \
 		src/terrain.cpp \
 		src/gl/datatype/VBO.cpp \
 		src/gl/datatype/VBOAttribMarker.cpp \
@@ -715,8 +719,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents images/images.qrc shaders/shaders.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt5.14.2/5.14.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/beziercurve.h src/mainwindow.h src/glwidget.h src/openglshape.h cs123_lib/resourceloader.h cs123_lib/errorchecker.h src/terrain.h src/gl/datatype/VBO.h src/gl/datatype/VBOAttribMarker.h src/gl/datatype/VAO.h src/gl/datatype/IBO.h src/gl/shaders/ShaderAttribLocations.h src/gl/GLDebug.h ../glew-1.10.0/include/GL/glew.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/beziercurve.cpp src/mainwindow.cpp src/main.cpp src/glwidget.cpp src/openglshape.cpp cs123_lib/resourceloader.cpp cs123_lib/errorchecker.cpp src/terrain.cpp src/gl/datatype/VBO.cpp src/gl/datatype/VBOAttribMarker.cpp src/gl/datatype/VAO.cpp src/gl/datatype/IBO.cpp src/gl/GLDebug.cpp ../glew-1.10.0/src/glew.c $(DISTDIR)/
+	$(COPY_FILE) --parents src/beziercurve.h src/mainwindow.h src/glwidget.h src/openglshape.h cs123_lib/resourceloader.h cs123_lib/errorchecker.h src/sphere.h src/terrain.h src/gl/datatype/VBO.h src/gl/datatype/VBOAttribMarker.h src/gl/datatype/VAO.h src/gl/datatype/IBO.h src/gl/shaders/ShaderAttribLocations.h src/gl/GLDebug.h ../glew-1.10.0/include/GL/glew.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/beziercurve.cpp src/mainwindow.cpp src/main.cpp src/glwidget.cpp src/openglshape.cpp cs123_lib/resourceloader.cpp cs123_lib/errorchecker.cpp src/sphere.cpp src/terrain.cpp src/gl/datatype/VBO.cpp src/gl/datatype/VBOAttribMarker.cpp src/gl/datatype/VAO.cpp src/gl/datatype/IBO.cpp src/gl/GLDebug.cpp ../glew-1.10.0/src/glew.c $(DISTDIR)/
 	$(COPY_FILE) --parents src/mainwindow.ui $(DISTDIR)/
 
 
@@ -872,6 +876,7 @@ moc_mainwindow.cpp: src/mainwindow.h \
 		src/gl/datatype/VBO.h \
 		src/gl/datatype/VBOAttribMarker.h \
 		src/beziercurve.h \
+		src/sphere.h \
 		moc_predefs.h \
 		../../../../Qt5.14.2/5.14.2/clang_64/bin/moc
 	/Users/linalim/Qt5.14.2/5.14.2/clang_64/bin/moc $(DEFINES) --include /Users/linalim/Brown_ws/cs1230/final/lab05/moc_predefs.h -I/Users/linalim/Qt5.14.2/5.14.2/clang_64/mkspecs/macx-clang -I/Users/linalim/Brown_ws/cs1230/final/lab05 -I/Users/linalim/Brown_ws/cs1230/final/lab05/src -I/Users/linalim/Brown_ws/cs1230/final/lab05/cs123_lib -I/Users/linalim/Brown_ws/cs1230/final/lab05/glm -I/Users/linalim/Brown_ws/cs1230/final/glew-1.10.0/include -I/Users/linalim/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers -I/Users/linalim/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/linalim/Qt5.14.2/5.14.2/clang_64/lib/QtGui.framework/Headers -I/Users/linalim/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/linalim/Qt5.14.2/5.14.2/clang_64/lib src/mainwindow.h -o moc_mainwindow.cpp
@@ -974,6 +979,7 @@ moc_glwidget.cpp: src/glwidget.h \
 		src/gl/datatype/VBO.h \
 		src/gl/datatype/VBOAttribMarker.h \
 		src/beziercurve.h \
+		src/sphere.h \
 		moc_predefs.h \
 		../../../../Qt5.14.2/5.14.2/clang_64/bin/moc
 	/Users/linalim/Qt5.14.2/5.14.2/clang_64/bin/moc $(DEFINES) --include /Users/linalim/Brown_ws/cs1230/final/lab05/moc_predefs.h -I/Users/linalim/Qt5.14.2/5.14.2/clang_64/mkspecs/macx-clang -I/Users/linalim/Brown_ws/cs1230/final/lab05 -I/Users/linalim/Brown_ws/cs1230/final/lab05/src -I/Users/linalim/Brown_ws/cs1230/final/lab05/cs123_lib -I/Users/linalim/Brown_ws/cs1230/final/lab05/glm -I/Users/linalim/Brown_ws/cs1230/final/glew-1.10.0/include -I/Users/linalim/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers -I/Users/linalim/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/linalim/Qt5.14.2/5.14.2/clang_64/lib/QtGui.framework/Headers -I/Users/linalim/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/linalim/Qt5.14.2/5.14.2/clang_64/lib src/glwidget.h -o moc_glwidget.cpp
@@ -1091,7 +1097,8 @@ beziercurve.o: src/beziercurve.cpp src/beziercurve.h \
 		src/openglshape.h \
 		../glew-1.10.0/include/GL/glew.h \
 		src/gl/datatype/VBO.h \
-		src/gl/datatype/VBOAttribMarker.h
+		src/gl/datatype/VBOAttribMarker.h \
+		src/gl/shaders/ShaderAttribLocations.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o beziercurve.o src/beziercurve.cpp
 
 mainwindow.o: src/mainwindow.cpp src/mainwindow.h \
@@ -1197,6 +1204,7 @@ mainwindow.o: src/mainwindow.cpp src/mainwindow.h \
 		src/gl/datatype/VBO.h \
 		src/gl/datatype/VBOAttribMarker.h \
 		src/beziercurve.h \
+		src/sphere.h \
 		ui_mainwindow.h \
 		../../../../Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QSettings \
 		../../../../Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qsettings.h \
@@ -1308,7 +1316,8 @@ main.o: src/main.cpp ../../../../Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framewor
 		src/openglshape.h \
 		src/gl/datatype/VBO.h \
 		src/gl/datatype/VBOAttribMarker.h \
-		src/beziercurve.h
+		src/beziercurve.h \
+		src/sphere.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
 
 glwidget.o: src/glwidget.cpp src/glwidget.h \
@@ -1409,6 +1418,7 @@ glwidget.o: src/glwidget.cpp src/glwidget.h \
 		src/gl/datatype/VBO.h \
 		src/gl/datatype/VBOAttribMarker.h \
 		src/beziercurve.h \
+		src/sphere.h \
 		cs123_lib/resourceloader.h \
 		cs123_lib/errorchecker.h \
 		../../../../Qt5.14.2/5.14.2/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
@@ -1434,6 +1444,94 @@ resourceloader.o: cs123_lib/resourceloader.cpp cs123_lib/resourceloader.h \
 errorchecker.o: cs123_lib/errorchecker.cpp cs123_lib/errorchecker.h \
 		../glew-1.10.0/include/GL/glew.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o errorchecker.o cs123_lib/errorchecker.cpp
+
+sphere.o: src/sphere.cpp src/sphere.h \
+		glm/glm.hpp \
+		glm/detail/_fixes.hpp \
+		glm/fwd.hpp \
+		glm/detail/type_int.hpp \
+		glm/detail/setup.hpp \
+		glm/detail/type_float.hpp \
+		glm/detail/type_vec.hpp \
+		glm/detail/precision.hpp \
+		glm/detail/type_mat.hpp \
+		glm/vec2.hpp \
+		glm/detail/type_vec2.hpp \
+		glm/detail/_swizzle.hpp \
+		glm/detail/_swizzle_func.hpp \
+		glm/detail/type_vec2.inl \
+		glm/vec3.hpp \
+		glm/detail/type_vec3.hpp \
+		glm/detail/type_vec3.inl \
+		glm/vec4.hpp \
+		glm/detail/type_vec4.hpp \
+		glm/detail/type_vec4.inl \
+		glm/mat2x2.hpp \
+		glm/detail/type_mat2x2.hpp \
+		glm/detail/type_mat2x2.inl \
+		glm/mat2x3.hpp \
+		glm/detail/type_mat2x3.hpp \
+		glm/detail/type_mat2x3.inl \
+		glm/mat2x4.hpp \
+		glm/detail/type_mat2x4.hpp \
+		glm/detail/type_mat2x4.inl \
+		glm/mat3x2.hpp \
+		glm/detail/type_mat3x2.hpp \
+		glm/detail/type_mat3x2.inl \
+		glm/mat3x3.hpp \
+		glm/detail/type_mat3x3.hpp \
+		glm/detail/type_mat3x3.inl \
+		glm/mat3x4.hpp \
+		glm/detail/type_mat3x4.hpp \
+		glm/detail/type_mat3x4.inl \
+		glm/mat4x2.hpp \
+		glm/detail/type_mat4x2.hpp \
+		glm/detail/type_mat4x2.inl \
+		glm/mat4x3.hpp \
+		glm/detail/type_mat4x3.hpp \
+		glm/detail/type_mat4x3.inl \
+		glm/mat4x4.hpp \
+		glm/detail/type_mat4x4.hpp \
+		glm/detail/type_mat4x4.inl \
+		glm/trigonometric.hpp \
+		glm/detail/func_trigonometric.hpp \
+		glm/detail/func_trigonometric.inl \
+		glm/detail/_vectorize.hpp \
+		glm/detail/type_vec1.hpp \
+		glm/detail/type_vec1.inl \
+		glm/exponential.hpp \
+		glm/detail/func_exponential.hpp \
+		glm/detail/func_exponential.inl \
+		glm/detail/func_vector_relational.hpp \
+		glm/detail/func_vector_relational.inl \
+		glm/common.hpp \
+		glm/detail/func_common.hpp \
+		glm/detail/func_common.inl \
+		glm/packing.hpp \
+		glm/detail/func_packing.hpp \
+		glm/detail/func_packing.inl \
+		glm/detail/type_half.hpp \
+		glm/detail/type_half.inl \
+		glm/geometric.hpp \
+		glm/detail/func_geometric.hpp \
+		glm/detail/func_geometric.inl \
+		glm/matrix.hpp \
+		glm/detail/func_matrix.hpp \
+		glm/detail/func_matrix.inl \
+		glm/vector_relational.hpp \
+		glm/integer.hpp \
+		glm/detail/func_integer.hpp \
+		glm/detail/func_integer.inl \
+		../glew-1.10.0/include/GL/glew.h \
+		glm/gtc/matrix_transform.hpp \
+		glm/gtc/matrix_transform.inl \
+		glm/gtc/constants.hpp \
+		glm/gtc/constants.inl \
+		src/gl/datatype/VAO.h \
+		src/gl/datatype/VBO.h \
+		src/gl/datatype/VBOAttribMarker.h \
+		src/gl/shaders/ShaderAttribLocations.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sphere.o src/sphere.cpp
 
 terrain.o: src/terrain.cpp src/terrain.h \
 		glm/glm.hpp \

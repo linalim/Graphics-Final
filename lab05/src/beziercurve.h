@@ -21,14 +21,17 @@ class BezierCurve
 {
 public:
     BezierCurve();
-    Point2d bezier2D(std::vector<Point2d> points, float t);
-
     void draw();
     void init();
 
+    std::vector<glm::vec3> getCurve();
 private:
-    void drawDot(Point2d point);
-    void drawLine(Point2d p1, Point2d p2);
+    const float m_numRows, m_numCols;
+    std::unique_ptr<OpenGLShape> m_shape;
+    int nChoosek(int n, int k);
+    glm::vec3 getPoint(std::vector<Point3d> points, float t);
+
+
 };
 
 #endif // BEZIERCURVE_H

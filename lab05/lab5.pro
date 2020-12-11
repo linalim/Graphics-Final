@@ -31,6 +31,7 @@ SOURCES += \
     src/openglshape.cpp \
     cs123_lib/resourceloader.cpp \
     cs123_lib/errorchecker.cpp \
+    src/sphere.cpp \
     src/terrain.cpp \
     src/gl/datatype/VBO.cpp \
     src/gl/datatype/VBOAttribMarker.cpp \
@@ -46,6 +47,7 @@ HEADERS += \
     src/openglshape.h \
     cs123_lib/resourceloader.h \
     cs123_lib/errorchecker.h \
+    src/sphere.h \
     src/terrain.h \
     src/gl/datatype/VBO.h \
     src/gl/datatype/VBOAttribMarker.h \

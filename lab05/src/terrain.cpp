@@ -36,7 +36,7 @@ glm::vec3 Terrain::getPosition(int row, int col) {
     position.z = 10 * col/m_numCols - 5;
 
     // TODO: Adjust position.y using value noise.
-    float scale = 20.f;
+    float scale = 15.f;
     for (int octave = 0; octave < 3; octave++) {
         float new_row = float(row)/scale;
         float new_col = float(col)/scale;
@@ -165,9 +165,6 @@ void Terrain::init() {
     m_shape->setVertexData(&data[0], data.size(), VBO::GEOMETRY_LAYOUT::LAYOUT_TRIANGLE_STRIP, numVertices);
     m_shape->setAttribute(ShaderAttrib::POSITION, 3, 0, VBOAttribMarker::DATA_TYPE::FLOAT, false);
     m_shape->setAttribute(ShaderAttrib::NORMAL, 3, 3 * sizeof(float), VBOAttribMarker::DATA_TYPE::FLOAT, false);
-
-    // added
-//    m_shape->setAttribute(ShaderAttrib::COLOR, 3, 12, VBOAttribMarker::DATA_TYPE::FLOAT, false);
     m_shape->setAttribute(ShaderAttrib::TEXCOORD0, 2, 6 * sizeof(float), VBOAttribMarker::DATA_TYPE::FLOAT, false);
 
     m_shape->buildVAO();
